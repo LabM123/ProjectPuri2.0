@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.HomeMain{
+    background-color: rgb(37 99 235);
+    color: white;
+    width: 100%;
+    min-height: 45vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    & h2{
+        font-size: 3rem;
+        font-family: sans-serif;
+    }
+    & h3{
+        font-weight: lighter;
+    }
+    & .button{
+        color: black;
+        background-color: rgb(241, 241, 248);;
+        padding: 1rem;
+        border-radius: .5rem;
+        border: solid 1px transparent;
+        margin-top: 1rem;
+        font-size: .85rem;
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+    }
+    & .button:hover{
+        color: white;
+        background-color: rgb(37 99 235);
+        border: solid 1px white;
+    }
+}
+
+.HomeServices{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    background-color: rgb(241, 241, 248);
+    min-height: 40vh;
+    gap: 3rem;
+    & h2{
+        font-weight: 600;
+        font-size: 2rem;
+    }
+    & .HomeServicesCards{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        min-width: 90%;
+    }
+}
+
+.HomeBenefits{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    background-color: rgb(230, 230, 253);
+    min-height: 40vh;
+    gap: 3rem;
+    & h2{
+        font-weight: 600;
+        font-size: 2rem;
+    }
+    & .HomeBenefitsCards{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        max-width: 90%;
+    }
+}
+
+.HomeFAQ{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    background-color: rgb(241, 241, 248);
+    min-height: 40vh;
+    gap: 3rem;
+    & h2{
+        font-weight: 600;
+        font-size: 2rem;
+    }
+    & .HomeFAQItems{
+        max-width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+}
