@@ -5,8 +5,19 @@ import deliveryTruckIconCard from '../../assets/deliverytruckcard.svg'
 import ServiceCard from '../../components/ServiceCard/ServiceCard'
 import BenefitCard from '../../components/BenefitCard/BenefitCard'
 import FAQItem from '../../components/FAQItem/FAQItem'
+import NavBar from '../../components/NavBar/NavBar'
+import Footer from '../../components/Footer/Footer'
+import { useContext, useEffect } from 'react'
+import { AppContext } from '../../AppContext'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
+
+    useEffect(() => {
+        document.title = 'Pureza Liquida | Inicio'
+    }, [])
+
+    const {data, setData} = useContext(AppContext)
 
     const serviceCardsInfo = [
         {
@@ -79,10 +90,11 @@ export default function Home() {
     }
     return(
         <>
-            <div className={styles['HomeMain']}>
+            <NavBar/>
+            <div className={styles['HomeMain']} id='home'>
                 <h2>Pureza Liquida: Refrescando Tu Vida</h2>
                 <h3>Servicio de purificacion, lavado y entrega de garrafones a domicilio</h3>
-                <div className={styles['button']}>Solicita Nuestro Servicio</div>
+                <Link className={styles['button']} to={data.user ? '/orders' : '/login'}>Solicita Nuestro Servicio</Link>
             </div>
             <div className={styles['HomeServices']}>
                 <h2>Nuestros Servicios Principales</h2>
@@ -97,11 +109,12 @@ export default function Home() {
                 </div>
             </div>
             <div className={styles['HomeFAQ']}>
-                <h2>Preguntas Frecuentes</h2>
+                <h2 id='faq'>Preguntas Frecuentes</h2>
                 <div className={styles['HomeFAQItems']}>
                     {renderFAQItems()}
                 </div>
             </div>
+            <Footer/>
         </>
     )
 }

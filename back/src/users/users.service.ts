@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { format } from "@formkit/tempo";
 
 @Injectable()
 export class UsersService {
@@ -26,7 +27,8 @@ export class UsersService {
         ...createUserDto,
         password: hashedPassword
       })
-      return {id: newUser.id};
+      const savedUser = await this.getUserByIdService(newUser.id)
+      return {id: newUser.id, user: savedUser, token: (await this.loginUser({password: createUserDto.password, email: createUserDto.email})).token};
     } catch (error) {
       throw new BadRequestException(error.message)
     }
@@ -40,7 +42,7 @@ export class UsersService {
       if(!validPassword) throw new BadRequestException("Email o contraseña incorrectos")
       const payload = {id: foundedUser.id, email: foundedUser.email, isAdmin: foundedUser.role}
       const token = this.jwtService.sign(payload);
-      return {token, message: 'Login successful'}
+      return {token, message: 'Login successful', user: await this.getUserByIdService(foundedUser.id)}
     } catch (error) {
       throw new BadRequestException(error.message)
     }
@@ -57,10 +59,10 @@ export class UsersService {
   
   async getUserByIdService(id: string) {
     try {
-      const foundedUser = await this.usersRepository.findOne({where: {id}})
+      const foundedUser = await this.usersRepository.findOne({where: {id}, relations: ['orders']})
       if(!foundedUser) throw new BadRequestException('Usuario no encontrado')
       const {password, ...userWithoutPassword} = foundedUser;
-      return userWithoutPassword;
+      return {...userWithoutPassword};
     } catch (error) {
       throw new BadRequestException(error.message)
     }
@@ -87,7 +89,7 @@ export class UsersService {
     try {
       const foundedUser = await this.usersRepository.findOne({where: {id}});
       if(!foundedUser) throw new BadRequestException('Usuario no encontrado')
-      const deletedUser = await this.usersRepository.update(id, {deleted_at: new Date()})
+      const deletedUser = await this.usersRepository.update(id, {deleted_at: format({ date: new Date, tz: 'America/Mexico_City', format: 'YYYY-MM-DDTHH:mm:ss' })})
       if(deletedUser.affected <= 0) throw new InternalServerErrorException('Usuario no eliminado')
       return {id}
     } catch (error) {

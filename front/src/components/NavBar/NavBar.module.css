@@ -1,0 +1,142 @@
+.NavBarBody{
+    background-color: rgb(37 99 235);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    justify-content: space-around;
+    gap: 30%;
+    padding-block: .5rem;
+    /* padding-inline: 5rem; */
+    position: sticky;
+    top: 0;
+    max-height: 8vh;
+    & .NavBarIcon{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        & img{
+            width: 3.5rem;
+        }
+        & .NavBarIconLetters{
+            padding-inline: .5rem;
+            font-family: serif;
+            font-size: 1.3rem;
+            letter-spacing: .03rem;
+            & p:nth-child(1){
+                color: rgb(42, 42, 211);
+            }
+            & p:nth-child(2){
+                color: rgb(211, 144, 19);
+            }
+        }
+    }
+    & .NavBarLinks{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5rem;
+        & a, span{
+            color: white;
+            padding: .5rem;
+            border: solid 1px transparent;
+            border-radius: .5rem;
+            transition: all 0.3s ease-in-out;
+            min-width: 6rem;
+            text-align: center;
+            cursor: pointer;
+        }
+        & a:hover, span:hover{
+            color: white;
+            border: solid 1px white;
+        }
+        & img{
+            max-width: 1.5rem;
+            border: solid 1px transparent;
+            border-radius: .5rem;
+            padding: .5rem;
+            box-sizing: content-box;
+            transition: all 0.3s ease-in-out;
+        }
+        & img:hover{
+            color: white;
+            border: solid 1px white;
+            cursor: pointer;
+        }
+    }
+}
+
+.SideMenuBackground{
+    background-color: rgba(0, 0, 0, 0.39);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer
+}
+
+.SideMenu{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    /* width: 50%; */
+    height: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s ease-in-out;
+    & img{
+        max-width: 3.5rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    & img:hover{
+        cursor: pointer;
+    }
+    & .SideMenuOptions{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: all .2s ease-in-out;
+        & p, a{
+            color: black;
+            padding: 1rem;
+            border-top: solid 1px lightgray;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            word-break: keep-all;
+            overflow: hidden;
+        }
+        & p, a:last-child{
+            color: black;
+            padding: 1rem;
+            border-block: solid 1px lightgray;
+            cursor: pointer;
+        }
+        & p:hover, a:hover{
+            background-color: rgb(37 99 235);
+            color: white;
+        }
+    }
+    & .ParentOpen{
+        opacity: 1;
+    }
+    
+    & .ParentClosed{
+        opacity: 0;
+    }
+}
+
+.open{
+    width: 30%;
+}
+
+.closed{
+    width: 0;
+}
+

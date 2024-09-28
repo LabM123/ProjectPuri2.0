@@ -33,6 +33,10 @@ export class OrdersService {
   async findAllOrdersService() {
     try {
       const allOrders = await this.ordersRepository.find({ relations: ['user'] });
+      const allFilteredOrders = allOrders.map((order) => {
+        return {...order, user: {...order.user, password: null}}
+      })
+      return allFilteredOrders
       return allOrders;
     } catch (error) {
       throw new BadRequestException(error.message);

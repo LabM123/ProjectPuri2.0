@@ -1,5 +1,6 @@
+import { format } from "@formkit/tempo";
 import { Order } from "src/orders/entities/order.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -30,12 +31,32 @@ export class User {
     @OneToMany(() => Order, (order) => order.user)
     orders: Order[]
 
-    @CreateDateColumn()
-    created_at: Date;
+    @Column({nullable: true, default: format({ date: new Date, tz: 'America/Mexico_City', format: 'YYYY-MM-DDTHH:mm:ss' })})
+    created_at: string;
 
-    @DeleteDateColumn()
-    deleted_at: Date;
+    @Column({nullable: true})
+    deleted_at: string;
 
-    @UpdateDateColumn()
-    updated_at: Date;
+    @Column({nullable: true})
+    updated_at: string;
+
+    @BeforeUpdate()
+    adjustTimeZoneUpdate() {
+        const nowInMexico = format({
+            date: new Date,
+            tz: 'America/Mexico_City',
+            format: 'YYYY-MM-DDTHH:mm:ss'
+        })
+        this.updated_at = nowInMexico
+    }
+    
+    @BeforeInsert()
+    adjustTimeZoneCreated() {
+        const nowInMexico = format({
+            date: new Date,
+            tz: 'America/Mexico_City',
+            format: 'YYYY-MM-DDTHH:mm:ss'
+        })
+        this.created_at = nowInMexico
+    }
 }

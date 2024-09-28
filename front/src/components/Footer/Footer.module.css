@@ -1,0 +1,70 @@
+.FooterBody{
+    background-color: rgb(31 41 55);
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    color: white;
+    padding-block: 2rem;
+    & > div{
+        width: 25%;
+    }
+    & .FooterContact{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        gap: .5rem;
+        & h6{
+            font-size: 1.3rem;
+            margin-block: .5rem;
+        }
+        & .FooterContactItem{
+            display: flex;
+            align-items: center;
+            align-items: start;
+            justify-content: start;
+            width: 90%;
+            gap: .5rem;
+            & img{
+                max-width: 1.2rem;
+                padding-block: .15rem;
+            }
+            & a{
+                color: white;
+                transition: all 0.3s ease-in-out;
+            }
+            & a:hover{
+                color: rgb(132, 144, 255);
+            }
+        }
+    }
+    & .FooterSchedule{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        gap: .5rem;
+        & h6{
+            font-size: 1.3rem;
+            margin-block: .5rem;
+        }
+    }
+    & .FooterSocial{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        gap: .5rem;
+        & h6{
+            font-size: 1.3rem;
+            margin-block: .5rem;
+        }
+        & a{
+            color: white;
+            transition: all 0.3s ease-in-out;
+        }
+        & a:hover{
+            color: rgb(132, 144, 255);
+        }
+    }
+}

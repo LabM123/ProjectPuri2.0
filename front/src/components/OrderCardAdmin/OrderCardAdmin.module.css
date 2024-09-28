@@ -1,0 +1,152 @@
+.closed{
+    display: none;
+}
+
+.open{
+    display: flex;
+}
+
+.Pendiente{
+    background-color: rgb(83, 83, 150);
+    color: white;
+}
+
+.Cancelado{
+    background-color: rgb(231, 0, 0);
+    color: white;
+}
+
+.Completado{
+    background-color: rgb(19, 206, 19);
+    color: white;
+}
+
+.CardBody{
+    background-color: white;
+    border: solid 1px lightgray;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 19%;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    & .CardMain{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0rem 1rem;
+        padding-block: .5rem;
+        & > .CardInfo{
+            width: 30%;
+            & h6{
+                font-size: 1rem;
+                font-weight: 550;
+                color: rgb(163, 0, 0);
+                color: black;
+            }
+            & p{
+                color: gray;
+            }
+            & h6, p{
+                text-align: center;
+            }
+        }
+    }
+    & .CardStatus{
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.CardBody:hover{
+    background-color: rgb(228, 228, 228);
+    cursor: pointer;
+}
+
+.ModalBackground{
+    background-color: rgba(0, 0, 0, 0.479);
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+
+.ModalBody{
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    margin: auto;
+    top: 2rem;
+    bottom: auto;
+    border-radius: 1rem;
+    max-width: 50%;
+    padding: 2rem;
+    gap: 2rem;
+    & .ModalInfo{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        justify-content: start;
+        align-items: center;
+        gap: 1rem 2rem;
+        padding: 0 4rem;
+        & .OrderInfo{
+            width: 47%;
+            & h6{
+                font-size: 1rem;
+                font-weight: 550;
+            }
+            & p{
+                color: gray;
+            }
+            & a{
+                color: blue;
+                text-decoration: underline;
+            }
+        }
+    }
+    & .ModalButtons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        & button{
+            padding: 1rem 1.5rem;
+            color: white;
+            border-radius: .5rem;
+            font-family: 'Poppins';
+        }
+        & button:nth-child(1){
+            background-color: rgb(231, 0, 0);
+            transition: all 0.3s ease-in-out;
+        }
+        & button:nth-child(1):hover{
+            background-color: rgb(197, 0, 0);
+            text-decoration: underline;
+        }
+        & button:nth-child(2){
+            background-color: rgb(83, 83, 150);
+            transition: all 0.3s ease-in-out;
+        }
+        & button:nth-child(2):hover{
+            background-color: rgb(71, 71, 129);
+            text-decoration: underline;
+        }
+        & button:nth-child(3){
+            background-color: rgb(19, 206, 19);
+            transition: all 0.3s ease-in-out;
+        }
+        & button:nth-child(3):hover{
+            background-color: rgb(18, 190, 18);
+            text-decoration: underline;
+        }
+    }
+}
+

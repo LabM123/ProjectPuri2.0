@@ -1,0 +1,187 @@
+@keyframes Rotate{
+    from {
+        transform: rotateX(90deg); /* Se rota desde 90 grados */
+    }
+    to {
+        transform: rotateX(0deg); /* Hacia la posición original */
+    }
+}
+
+.OrdersBody{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    /* min-height: 70vh; */
+    padding-block: 2rem;
+    background-color: rgb(241, 241, 248);
+    & .OrdersForm{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        & h2{
+            font-weight: 600;
+            font-size: 2rem;
+        }
+        form{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            width: 60%;
+            & .InputSection{
+                /* box-sizing: content-box; */
+                min-width: 30%;
+                display: flex;
+                flex-direction: column;
+                padding: 1rem;
+                justify-content: baseline;
+                align-items: baseline;
+                & label::after{
+                    content: '*';
+                    color: red;
+                }
+                & input{
+                    width: 80%;
+                    padding: .5rem;
+                    border-radius: .5rem;
+                    border: solid 1px lightgray;
+                    font-family: 'Poppins';
+                }
+                & input:focus{
+                    outline: none;
+                }
+                & select{
+                    padding: .5rem;
+                    border-radius: .5rem;
+                    border: solid 1px lightgray;
+                    font-family: 'Poppins';
+                    width: 80%;
+                    transition: all .3s ease-in-out;
+                }
+                & select:focus{
+                    outline: none;
+                }
+                & select:hover{
+                    cursor: pointer;
+                    background-color: rgb(231, 231, 231);
+                }
+                & .GetLocationButton{
+                    background-color: rgb(134, 134, 255);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 80%;
+                    max-height: 3rem;
+                    padding-block: .8rem;
+                    border-radius: .5rem;
+                    transition: all 0.3s ease-in-out;
+                    gap: .5rem;
+                    & img{
+                        max-width: 1.4rem;
+                    }
+                    & .CheckIcon{
+                        transform: rotateX(90deg);
+                        animation: Rotate 0.3s linear forwards;
+                        border: solid 2px rgb(0, 214, 0);
+                        border-radius: 50%;
+                        padding: .1rem;
+                    }
+                    & p{
+                        color: white;
+                        font-size: .9rem;
+                    }
+                }
+                & .GetLocationButton:hover{
+                    cursor: pointer;
+                    background-color: rgb(37 99 235);
+                }
+                & .clickable, .clickable:hover{
+                    background-color: rgb(37 99 235);
+                    cursor: default;
+                }
+                & button{
+                    background-color: rgb(134, 134, 255);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 80%;
+                    max-height: 3rem;
+                    padding-block: 1rem;
+                    border-radius: .5rem;
+                    color: white;
+                    font-family: 'Poppins';
+                    transition: all 0.3s ease-in-out;
+                }
+                & button:hover{
+                    background-color: rgb(37 99 235);
+                }
+            }
+        }
+        & .Advice{
+            font-style: italic;
+        }
+        & .Advice::before, .Advice::after{
+            content: '***';
+            color: red;
+        }
+    }
+    & hr{
+        width: 80%
+    }
+    & .OrdersUser{
+        padding-top: .5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 1rem;
+        /* background-color: rgba(0, 0, 255, 0.212); */
+        & .OrdersUserHeader{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5rem;
+            width: 100%;
+            & h2{
+                font-weight: 600;
+                font-size: 2rem;
+            }
+            & select{
+                padding: .5rem;
+                border-radius: .5rem;
+                border: solid 1px lightgray;
+                font-family: 'Poppins';
+                transition: all .3s ease-in-out;
+            }
+            & select:focus{
+                outline: none;
+            }
+            & select:hover{
+                cursor: pointer;
+                background-color: rgb(231, 231, 231);
+            }
+        }
+        & .OrdersUserBody{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            /* justify-content: start; */
+            align-items: center;
+            gap: 3rem;
+            width: 100%;
+            padding: 1rem 3rem;
+            & .Message{
+                font-size: 1.5rem;
+                color: gray;
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+.AdminBody{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    /* min-height: 70vh; */
+    padding-block: 2rem;
+    background-color: rgb(241, 241, 248);
+    & .AdminHeader{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5rem;
+        width: 100%;
+        & h2{
+            font-weight: 600;
+            font-size: 2rem;
+        }
+        & select{
+            padding: .5rem;
+            border-radius: .5rem;
+            border: solid 1px lightgray;
+            font-family: 'Poppins';
+            transition: all .3s ease-in-out;
+        }
+        & select:focus{
+            outline: none;
+        }
+        & select:hover{
+            cursor: pointer;
+            background-color: rgb(231, 231, 231);
+        }
+    }
+    & .AdminOrders{
+        min-height: 60vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* justify-content: start; */
+        align-items: start;
+        gap: 1rem;
+        width: 100%;
+        padding: 1rem 3rem;
+        & .Message{
+            font-size: 1.5rem;
+            color: gray;
+        }
+    }
+}
