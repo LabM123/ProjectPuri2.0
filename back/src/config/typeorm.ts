@@ -17,9 +17,9 @@ const config = {
     migrations: ['dist/migrations/*{.ts,.js}'],
     logging: 'error',
     synchronize: true,
-    dropSchema: true,
     migrationsRun: true,
-    ssl: { rejectUnauthorized: false }
+    // ssl: { rejectUnauthorized: false }
+    // dropSchema: true,
 };
 
 export default registerAs('typeorm', () => config);
