@@ -77,7 +77,12 @@ export class UsersService {
         if(!newPassword) throw new InternalServerErrorException('Usuario no actualizado')
         updateUserDto = {...updateUserDto, password: newPassword}
       }
-      const updatedUser = await this.usersRepository.update(id, {...updateUserDto})
+      const updated_at = format({
+        date: new Date,
+        tz: 'America/Mexico_City',
+        format: 'YYYY-MM-DDTHH:mm:ss'
+      })
+      const updatedUser = await this.usersRepository.update(id, {...updateUserDto, updated_at})
       if(updatedUser.affected <= 0) throw new InternalServerErrorException('Usuario no actualizado')
         return this.getUserByIdService(id)
     } catch (error) {

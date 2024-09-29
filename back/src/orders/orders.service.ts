@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
+import { format } from '@formkit/tempo';
 
 @Injectable()
 export class OrdersService {
@@ -76,7 +77,12 @@ export class OrdersService {
       const foundedOrder = await this.ordersRepository.findOne({ where: { id } });
       if (!foundedOrder) throw new NotFoundException('Orden no encontrada');
 
-      const updatedOrder = await this.ordersRepository.update(id, updateOrderDto);
+      const updated_at = format({
+        date: new Date,
+        tz: 'America/Mexico_City',
+        format: 'YYYY-MM-DDTHH:mm:ss'
+      })
+      const updatedOrder = await this.ordersRepository.update(id, {...updateOrderDto, updated_at});
       if (updatedOrder.affected <= 0) throw new InternalServerErrorException('Orden no actualizada');
 
       return this.findOrdersByUserIdService(foundedOrder.user_id);
@@ -90,7 +96,12 @@ export class OrdersService {
       const foundedOrder = await this.ordersRepository.findOne({ where: { id } });
       if (!foundedOrder) throw new NotFoundException('Orden no encontrada');
 
-      const canceledOrder = await this.ordersRepository.update(id, { status: 'Cancelado' });
+      const updated_at = format({
+        date: new Date,
+        tz: 'America/Mexico_City',
+        format: 'YYYY-MM-DDTHH:mm:ss'
+      })
+      const canceledOrder = await this.ordersRepository.update(id, { status: 'Cancelado', updated_at });
       if (canceledOrder.affected <= 0) throw new InternalServerErrorException('Orden no actualizada');
 
       return this.findOrdersByUserIdService(foundedOrder.user_id);
@@ -104,7 +115,12 @@ export class OrdersService {
       const foundedOrder = await this.ordersRepository.findOne({ where: { id } });
       if (!foundedOrder) throw new NotFoundException('Orden no encontrada');
 
-      const pendingOrder = await this.ordersRepository.update(id, { status: 'Pendiente' });
+      const updated_at = format({
+        date: new Date,
+        tz: 'America/Mexico_City',
+        format: 'YYYY-MM-DDTHH:mm:ss'
+      })
+      const pendingOrder = await this.ordersRepository.update(id, { status: 'Pendiente', updated_at });
       if (pendingOrder.affected <= 0) throw new InternalServerErrorException('Orden no actualizada');
 
       return this.findOrdersByUserIdService(foundedOrder.user_id);
@@ -119,7 +135,12 @@ export class OrdersService {
       const foundedOrder = await this.ordersRepository.findOne({ where: { id } });
       if (!foundedOrder) throw new NotFoundException('Orden no encontrada');
 
-      const completedOrder = await this.ordersRepository.update(id, { status: 'Completado' });
+      const updated_at = format({
+        date: new Date,
+        tz: 'America/Mexico_City',
+        format: 'YYYY-MM-DDTHH:mm:ss'
+      })
+      const completedOrder = await this.ordersRepository.update(id, { status: 'Completado', updated_at });
       if (completedOrder.affected <= 0) throw new InternalServerErrorException('Orden no actualizada');
 
       return this.findOrdersByUserIdService(foundedOrder.user_id);

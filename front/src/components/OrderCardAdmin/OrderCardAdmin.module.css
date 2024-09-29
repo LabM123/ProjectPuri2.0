@@ -41,7 +41,8 @@
         gap: 0rem 1rem;
         padding-block: .5rem;
         & > .CardInfo{
-            width: 30%;
+            max-width: 30%;
+            min-width: 20%;
             & h6{
                 font-size: 1rem;
                 font-weight: 550;
