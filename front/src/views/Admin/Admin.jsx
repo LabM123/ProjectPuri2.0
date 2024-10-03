@@ -58,14 +58,18 @@ export default function Admin() {
     }
 
     const displayOrders= () => {
-        const filteredOrders = []
+        let filteredOrders = []
+        const completedOrders = []
+        const pendingOrders = []
+        const cancelledOrders = []
         for(let i=0;i<allOrders?.length;i++){
             if(sameDay(date, allOrders[i].created_at)){
-                filteredOrders.push(
-                    <OrderCardAdmin order={allOrders[i]} key={i} token={data.token} data={data} setData={setData} setAllOrders={setAllOrders}/>
-                )
+                if(allOrders[i].status === 'Completado') completedOrders.push(<OrderCardAdmin order={allOrders[i]} key={i} token={data.token} data={data} setData={setData} setAllOrders={setAllOrders}/>)
+                else if(allOrders[i].status === 'Pendiente') pendingOrders.push(<OrderCardAdmin order={allOrders[i]} key={i} token={data.token} data={data} setData={setData} setAllOrders={setAllOrders}/>)
+                else cancelledOrders.push(<OrderCardAdmin order={allOrders[i]} key={i} token={data.token} data={data} setData={setData} setAllOrders={setAllOrders}/>)
             }
         }
+        filteredOrders = [...pendingOrders, ...completedOrders, ...cancelledOrders]
         if(!filteredOrders.length){
             return(
                 <p className={styles['Message']}>No tienes ordenes para este dia</p>

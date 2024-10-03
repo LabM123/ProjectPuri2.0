@@ -4,6 +4,7 @@ import Login from './views/Login/Login'
 import Orders from './views/Orders/Orders'
 import Admin from './views/Admin/Admin'
 import Default from './views/Default/Default'
+import Config from './views/Config/Config'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/orders" element={<Orders/>}/>
+      <Route path="/config" element={<Config/>}/>
       <Route path="/admin" element={<Admin/>}/>
       <Route path="*" element={<Default/>}/>
     </Routes>
