@@ -1,0 +1,32 @@
+@keyframes loop {
+    from{
+        transform: rotateZ(0deg);
+    }
+    to{
+        transform: rotateZ(360deg);
+    }
+}
+
+.LoaderBody{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 255, 0.219);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .LoaderIcon{
+        --loader-size: 6rem;
+        width: var(--loader-size);
+        height: var(--loader-size);
+        border: solid 7px rgb(208, 207, 250);
+        border-top-color: rgb(109, 109, 255);
+        border-radius: 50%;
+        animation: loop 1.5s infinite ease-in-out;
+        animation: loop 1.5s infinite linear;
+    }
+}

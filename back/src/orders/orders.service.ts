@@ -131,7 +131,6 @@ export class OrdersService {
 
   async completeOrderService(id: string) {
     try {
-      console.log('ID recibido en completeOrderService:', id);
       const foundedOrder = await this.ordersRepository.findOne({ where: { id } });
       if (!foundedOrder) throw new NotFoundException('Orden no encontrada');
 
