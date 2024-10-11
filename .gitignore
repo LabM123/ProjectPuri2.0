@@ -1,3 +1,4 @@
 .env
 .devdbrc
 node_modules
+back/src/config/typeorm.ts
