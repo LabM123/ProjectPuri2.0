@@ -56,6 +56,17 @@ export class UsersService {
       throw new BadRequestException(error.message)
     }
   }
+
+  async getUserByEmailService(email: string) {
+    try {
+      const foundedUser = await this.usersRepository.findOne({where: {email}, relations: ['orders']})
+      if(!foundedUser) throw new BadRequestException('Usuario no encontrado')
+      const {password, ...userWithoutPassword} = foundedUser;
+      return {...userWithoutPassword};
+    } catch (error) {
+      throw new BadRequestException(error.message)
+    }
+  }
   
   async getUserByIdService(id: string) {
     try {
@@ -63,6 +74,65 @@ export class UsersService {
       if(!foundedUser) throw new BadRequestException('Usuario no encontrado')
       const {password, ...userWithoutPassword} = foundedUser;
       return {...userWithoutPassword};
+    } catch (error) {
+      throw new BadRequestException(error.message)
+    }
+  }
+
+  async resetUserPasswordService(id: string, password: string) {
+    try {
+      const foundedUser = await this.usersRepository.findOne({where: {id}})
+      if(!foundedUser) throw new BadRequestException('Usuario no encontrado')
+      const validPassword = password === process.env.ADMIN_PASSWORD
+      if(!validPassword) throw new BadRequestException("Contraseña incorrecta")
+      const newPassword = await bcrypt.hash('Purificadora1', 10)
+      if(!newPassword) throw new InternalServerErrorException('Usuario no actualizado')
+      const updated_at = format({
+        date: new Date,
+        tz: 'America/Mexico_City',
+        format: 'YYYY-MM-DDTHH:mm:ss'
+      })
+      const updatedUser = await this.usersRepository.update(id, {password: newPassword, updated_at})
+      if(updatedUser.affected <= 0) throw new InternalServerErrorException('Usuario no actualizado')
+      return this.getUserByIdService(id)
+    } catch (error) {
+      throw new BadRequestException(error.message)
+    }
+  }
+
+  async upgradeUserService(id: string, password: string) {
+    try {
+      const foundedUser = await this.usersRepository.findOne({where: {id}})
+      if(!foundedUser) throw new BadRequestException('Usuario no encontrado')
+      const validPassword = password === process.env.ADMIN_PASSWORD
+      if(!validPassword) throw new BadRequestException("Contraseña incorrecta")
+      const updated_at = format({
+        date: new Date,
+        tz: 'America/Mexico_City',
+        format: 'YYYY-MM-DDTHH:mm:ss'
+      })
+      const updatedUser = await this.usersRepository.update(id, {role: 'admin', updated_at})
+      if(updatedUser.affected <= 0) throw new InternalServerErrorException('Usuario no actualizado')
+      return this.getUserByIdService(id)
+    } catch (error) {
+      throw new BadRequestException(error.message)
+    }
+  }
+
+  async downgradeUserService(id: string, password: string) {
+    try {
+      const foundedUser = await this.usersRepository.findOne({where: {id}})
+      if(!foundedUser) throw new BadRequestException('Usuario no encontrado')
+      const validPassword = password === process.env.ADMIN_PASSWORD
+      if(!validPassword) throw new BadRequestException("Contraseña incorrecta")
+      const updated_at = format({
+        date: new Date,
+        tz: 'America/Mexico_City',
+        format: 'YYYY-MM-DDTHH:mm:ss'
+      })
+      const updatedUser = await this.usersRepository.update(id, {role: 'user', updated_at})
+      if(updatedUser.affected <= 0) throw new InternalServerErrorException('Usuario no actualizado')
+      return this.getUserByIdService(id)
     } catch (error) {
       throw new BadRequestException(error.message)
     }
@@ -84,7 +154,7 @@ export class UsersService {
       })
       const updatedUser = await this.usersRepository.update(id, {...updateUserDto, updated_at})
       if(updatedUser.affected <= 0) throw new InternalServerErrorException('Usuario no actualizado')
-        return this.getUserByIdService(id)
+      return this.getUserByIdService(id)
     } catch (error) {
       throw new BadRequestException(error.message)
     }

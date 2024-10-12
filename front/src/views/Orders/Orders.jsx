@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import checkIcon from '../../assets/checkicon.svg'
 import locationIcon from '../../assets/locationicon.svg'
+import Loader from '../../components/Loader/Loader'
 
 export default function Orders(){
 
@@ -18,13 +19,17 @@ export default function Orders(){
     const allUserOrders = data?.user?.orders;
     const navigate = useNavigate()
 
+    const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
         document.title = 'Pureza Liquida | Repartos'
         if(!data.user) navigate('/login')
         else if(data.user.role === 'admin') navigate('/admin')
         else{
+            setIsLoading(true)
             axios.get(`${import.meta.env.VITE_API_URL}/orders/users/${data.user.id}`, {headers: {Authorization: `Bearer ${data.token}`}})
             .then(({data}) => {
+                setIsLoading(false)
                 setData({
                     ...userData,
                     user: {
@@ -34,6 +39,7 @@ export default function Orders(){
                 })
             })
             .catch(error => {
+                setIsLoading(false)
                 navigate('/login')
                 console.log(error)
                 Swal.fire({
@@ -59,7 +65,7 @@ export default function Orders(){
         const allOptions = []
         for(let i = 0; i < 10; i++){
             allOptions.push(
-            <option value={format({date: addDay(new Date, -i), format: 'YYYY-MM-DDTHH:mm:ss'})}>
+            <option value={format({date: addDay(new Date, -i), format: 'YYYY-MM-DDTHH:mm:ss'})} key={i}>
                 { i === 0 ? 'Hoy' : `Hace ${i} dia(s)`}
             </option>
             )
@@ -72,7 +78,7 @@ export default function Orders(){
         for(let i=0;i<allUserOrders?.length;i++){
             if(sameDay(date, allUserOrders[i].created_at)){
                 filteredOrders.push(
-                    <OrderCardUser bottles_amount={allUserOrders[i].bottles_amount} section={allUserOrders[i].section} external_number={allUserOrders[i].external_number} internal_number={allUserOrders[i].internal_number} status={allUserOrders[i].status} id={allUserOrders[i].id} created_at={allUserOrders[i].created_at}/>
+                    <OrderCardUser bottles_amount={allUserOrders[i].bottles_amount} section={allUserOrders[i].section} external_number={allUserOrders[i].external_number} internal_number={allUserOrders[i].internal_number} status={allUserOrders[i].status} id={allUserOrders[i].id} created_at={allUserOrders[i].created_at} setIsLoading={setIsLoading} key={i}/>
                 )
             }
         }
@@ -128,8 +134,10 @@ export default function Orders(){
         e.preventDefault()
         if(!newOrder.external_number || !newOrder.internal_number || !newOrder.section || !newOrder.bottles_amount) Swal.fire({title: 'Oops...', text: 'Asegurate de llenar los campos requeridos', icon: 'warning'})
         else {
+            setIsLoading(true)
             axios.post(`${import.meta.env.VITE_API_URL}/orders`, {...newOrder, bottles_amount: Number(newOrder.bottles_amount)}, {headers: {Authorization: `Bearer ${data.token}`}})
             .then(({data}) => {
+                setIsLoading(false)
                 setData({
                     ...userData,
                     user: {
@@ -144,6 +152,7 @@ export default function Orders(){
                 })
             })
             .catch(error => {
+                setIsLoading(false)
                 console.log(error)
                 Swal.fire({
                     title: 'Oops...', 
@@ -157,6 +166,13 @@ export default function Orders(){
     return(
         <>
             <NavBar/>
+            {
+                isLoading
+                ?
+                <Loader/>
+                :
+                null
+            }
             <div className={styles['OrdersBody']}>
                 <div className={styles['OrdersForm']}>
                     <h2>Crea una orden</h2>

@@ -8,12 +8,15 @@ import dropDownIcon from '../../assets/dropdownicon.svg'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { format } from '@formkit/tempo'
+import Loader from '../../components/Loader/Loader'
 
 export default function Config(){
 
     const {data, setData} = useContext(AppContext)
     const userData = data
     const navigate = useNavigate()
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const [completedOrders, setCompletedOrders] = useState(0)
     const [cancelledOrders, setCancelledOrders] = useState(0)
@@ -74,8 +77,10 @@ export default function Config(){
             })
             .then(response => {
                 if(response.isConfirmed){
+                    setIsLoading(true)
                     axios.put(`${import.meta.env.VITE_API_URL}/users/${data.user.id}`, {email: emailFormContent.email}, {headers: {Authorization: `Bearer ${data.token}`}})
                     .then(({data}) => {
+                        setIsLoading(false)
                         setData({
                             ...userData,
                             user: data
@@ -87,6 +92,7 @@ export default function Config(){
                         setEmailFormContent(initialEmailFormContent)
                     })
                     .catch(error => {
+                        setIsLoading(false)
                         console.log(error);
                         Swal.fire({
                             title: 'Oops...', 
@@ -128,8 +134,10 @@ export default function Config(){
             })
             .then(response => {
                 if(response.isConfirmed){
+                    setIsLoading(true)
                     axios.put(`${import.meta.env.VITE_API_URL}/users/${data.user.id}`, {phone_number: phoneFormContent.phone_number}, {headers: {Authorization: `Bearer ${data.token}`}})
                     .then(({data}) => {
+                        setIsLoading(false)
                         setData({
                             ...userData,
                             user: data
@@ -141,6 +149,7 @@ export default function Config(){
                         setPhoneFormContent(initialPhoneFormContent)
                     })
                     .catch(error => {
+                        setIsLoading(false)
                         console.log(error);
                         Swal.fire({
                             title: 'Oops...', 
@@ -182,8 +191,10 @@ export default function Config(){
             })
             .then(response => {
                 if(response.isConfirmed){
+                    setIsLoading(true)
                     axios.put(`${import.meta.env.VITE_API_URL}/users/${data.user.id}`, {password: passwordFormContent.password}, {headers: {Authorization: `Bearer ${data.token}`}})
                     .then(({data}) => {
+                        setIsLoading(false)
                         setData({
                             ...userData,
                             user: data
@@ -195,6 +206,7 @@ export default function Config(){
                         setPasswordFormContent(initialPasswordFormContent)
                     })
                     .catch(error => {
+                        setIsLoading(false)
                         console.log(error);
                         Swal.fire({
                             title: 'Oops...', 
@@ -210,6 +222,13 @@ export default function Config(){
     return(
         <>
             <NavBar/>
+            {
+                isLoading
+                ?
+                <Loader/>
+                :
+                null
+            }
             <div className={styles['ConfigBody']}>
                 <h2>Configuracion de Cuenta</h2>
                 <div className={styles['ConfigMain']}>

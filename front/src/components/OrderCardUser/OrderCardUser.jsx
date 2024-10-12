@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useContext } from 'react'
 import { AppContext } from '../../AppContext'
 
-export default function OrderCardUser({id, bottles_amount, section, external_number, internal_number, status, created_at}){
+export default function OrderCardUser({id, bottles_amount, section, external_number, internal_number, status, created_at, setIsLoading}){
     const formatedDate = format({
         date: created_at,
         tz: 'America/Mexico_City',
@@ -26,12 +26,14 @@ export default function OrderCardUser({id, bottles_amount, section, external_num
         })
         .then((response) => {
             if(response.isConfirmed){
+                setIsLoading(true)
                 axios.put(`${import.meta.env.VITE_API_URL}/orders/cancel/${id}`, {}, {
                     headers: {
                         Authorization: `Bearer ${data.token}`
                     }
                 })
                 .then(({data}) => {
+                    setIsLoading(false)
                     setData({
                         ...userData,
                         user: {
@@ -45,6 +47,7 @@ export default function OrderCardUser({id, bottles_amount, section, external_num
                     })
                 })
                 .catch(error => {
+                    setIsLoading(false)
                     console.log(error)
                     Swal.fire({
                         title: 'Oops...', 

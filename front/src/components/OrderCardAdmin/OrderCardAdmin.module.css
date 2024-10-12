@@ -1,9 +1,11 @@
 @keyframes fade-in {
     from{
         opacity: 0;
+        transform: translateY(1rem);
     }
     to{
         opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -40,7 +42,7 @@
     justify-content: center;
     width: 19%;
     overflow: hidden;
-    animation: fade-in 0.5s forwards linear;
+    animation: fade-in 0.3s forwards linear;
     transition: all 0.3s ease-in-out;
     & .CardMain{
         display: flex;
@@ -93,16 +95,20 @@
 .ModalBody{
     flex-direction: column;
     position: absolute;
+    position: fixed;
     background-color: white;
     margin: auto;
-    top: 2rem;
+    top: 5vh;
     bottom: auto;
     border-radius: 1rem;
     max-width: 50%;
+    max-height: 90vh;
     padding: 2rem;
     gap: 2rem;
+    animation: fade-in 0.3s forwards linear;
     z-index: 11;
     & .ModalInfo{
+        overflow-y: auto;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;

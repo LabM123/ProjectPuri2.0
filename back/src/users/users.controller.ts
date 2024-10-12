@@ -18,12 +18,40 @@ export class UsersController {
   getAllUsers() {
     return this.usersService.getAllUsersService();
   }
+
+  @Get('/email/:email')
+  @Roles(Role.admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  getUserByEmail(@Param('email') email: string) {
+    return this.usersService.getUserByEmailService(email);
+  }
   
   @Get(':id')
   @Roles(Role.admin, Role.user)
   @UseGuards(AuthGuard, RolesGuard)
   getUserById(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.getUserByIdService(id);
+  }
+
+  @Post('/reset/:userId')
+  @Roles(Role.admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  resetUserPassword(@Param('userId') userId: string, @Body() body) {
+    return this.usersService.resetUserPasswordService(userId, body.password);
+  }
+
+  @Post('/upgrade/:userId')
+  @Roles(Role.admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  upgradeUser(@Param('userId') userId: string, @Body() body) {
+    return this.usersService.upgradeUserService(userId, body.password);
+  }
+
+  @Post('/downgrade/:userId')
+  @Roles(Role.admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  downgradeUser(@Param('userId') userId: string, @Body() body) {
+    return this.usersService.downgradeUserService(userId, body.password);
   }
   
   @Post("/register")

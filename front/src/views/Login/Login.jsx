@@ -8,6 +8,7 @@ import NavBar from '../../components/NavBar/NavBar'
 import Footer from '../../components/Footer/Footer'
 import loginIcon from '../../assets/loginicon.svg'
 import signupIcon from '../../assets/signupicon.svg'
+import Loader from '../../components/Loader/Loader'
 
 export default function Login() {
     useEffect(() => {
@@ -16,6 +17,8 @@ export default function Login() {
 
     const {data, setData} = useContext(AppContext)
     const navigate = useNavigate()
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const intialStateLogin = {
         email: '',
@@ -50,12 +53,15 @@ export default function Login() {
     const handleSubmitLogin = (e) => {
         e.preventDefault()
         if(newLogin.password && newLogin.email){
+                setIsLoading(true)
                 axios.post(`${import.meta.env.VITE_API_URL}/users/login`, newLogin)
                 .then(response => {
+                    setIsLoading(false)
                     setData(response.data)
                     navigate('/orders')
                 })
                 .catch(error => {
+                    setIsLoading(false)
                     console.log(error)
                     Swal.fire({
                         title: 'Oops...',
@@ -77,18 +83,21 @@ export default function Login() {
         if(!newRegister.password || !newRegister.email || !newRegister.confirm_password || !newRegister.name) Swal.fire({title: 'Oops...', text: 'Llena los espacios requeridos', icon: 'warning'})
         else if(newRegister.password !== newRegister.confirm_password) Swal.fire({title: 'Oops...', text: 'Ambas contraseñas deben ser las mismas', icon: 'warning'})
         else{
+            setIsLoading(true)
             axios.post(`${import.meta.env.VITE_API_URL}/users/register`, newRegister)
             .then(response => {
+                setIsLoading(false)
                 setData(response.data)
                 Swal.fire({
                     icon: 'success', 
-                    text: 'Registro exitoso'
+                    title: 'Registro exitoso'
                 })
                 .then(() => {
                     navigate('/orders')
                 })
             })
             .catch(error => {
+                setIsLoading(false)
                 console.log(error)
                 Swal.fire({
                     title: 'Oops...', 
@@ -101,6 +110,13 @@ export default function Login() {
     return(
         <>
             <NavBar/>
+            {
+                isLoading
+                ?
+                <Loader/>
+                :
+                null
+            }
             <div className={styles['LoginBody']}>
                 <h2>Acceso a Repartos</h2>
                 <p>Para acceder a nuestra seccion de repartos, por favor inicia sesion o registrate</p>

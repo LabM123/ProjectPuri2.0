@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 
-export default function OrderCardAdmin({order, data, setData, token, setAllOrders}){
+export default function OrderCardAdmin({order, data, setData, token, setAllOrders, setIsLoading}){
     const [isOpen, setIsOpen] = useState(false)
     const toogleIsOpen = () => {setIsOpen(!isOpen)}
 
@@ -20,10 +20,12 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
         .then(response => {
             if(response.isConfirmed){
                 toogleIsOpen()
+                setIsLoading(true)
                 axios.put(`${import.meta.env.VITE_API_URL}/orders/cancel/${order.id}`, {}, {headers: {Authorization: `Bearer ${token}`}})
                 .then(() => {
                     axios.get(`${import.meta.env.VITE_API_URL}/orders`, {headers: {Authorization: `Bearer ${token}`}})
                     .then(({data}) => {
+                        setIsLoading(false)
                         setAllOrders(data)
                         Swal.fire({
                             title: 'Reparto cancelado', 
@@ -31,6 +33,7 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
                         })
                     })
                     .catch(error => {
+                        setIsLoading(false)
                         console.log(error)
                         Swal.fire({
                             title: 'Oops...', 
@@ -40,6 +43,7 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
                     })
                 })
                 .catch(error => {
+                    setIsLoading(false)
                     console.log(error)
                     Swal.fire({
                         title: 'Oops...', 
@@ -63,10 +67,12 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
         .then(response => {
             if(response.isConfirmed){
                 toogleIsOpen()
+                setIsLoading(true)
                 axios.put(`${import.meta.env.VITE_API_URL}/orders/pending/${order.id}`, {}, {headers: {Authorization: `Bearer ${token}`}})
                 .then(() => {
                     axios.get(`${import.meta.env.VITE_API_URL}/orders`, {headers: {Authorization: `Bearer ${token}`}})
                     .then(({data}) => {
+                        setIsLoading(false)
                         setAllOrders(data)
                         Swal.fire({
                             title: 'Reparto reactivado', 
@@ -74,6 +80,7 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
                         })
                     })
                     .catch(error => {
+                        setIsLoading(false)
                         console.log(error)
                         Swal.fire({
                             title: 'Oops...', 
@@ -83,6 +90,7 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
                     })
                 })
                 .catch(error => {
+                    setIsLoading(false)
                     console.log(error)
                     Swal.fire({
                         title: 'Oops...', 
@@ -106,10 +114,12 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
         .then(response => {
             if(response.isConfirmed){
                 toogleIsOpen()
+                setIsLoading(true)
                 axios.put(`${import.meta.env.VITE_API_URL}/orders/complete/${order.id}`, {}, {headers: {Authorization: `Bearer ${token}`}})
                 .then(() => {
                     axios.get(`${import.meta.env.VITE_API_URL}/orders`, {headers: {Authorization: `Bearer ${token}`}})
                     .then(({data}) => {
+                        setIsLoading(false)
                         setAllOrders(data)
                         Swal.fire({
                             title: 'Reparto finalizado', 
@@ -117,6 +127,7 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
                         })
                     })
                     .catch(error => {
+                        setIsLoading(false)
                         console.log(error)
                         Swal.fire({
                             title: 'Oops...', 
@@ -126,6 +137,7 @@ export default function OrderCardAdmin({order, data, setData, token, setAllOrder
                     })
                 })
                 .catch(error => {
+                    setIsLoading(false)
                     console.log(error)
                     Swal.fire({
                         title: 'Oops...', 
