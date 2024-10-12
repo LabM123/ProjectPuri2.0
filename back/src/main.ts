@@ -7,7 +7,11 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true })
   );
-  app.enableCors();
+  app.enableCors({
+    origin: 'https://project-puri2-0.vercel.app',
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+  });
   await app.listen(3000);
 }
 
